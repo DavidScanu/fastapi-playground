@@ -1,5 +1,7 @@
+name: cinema
 services:
   db:
+    container_name: db
     hostname: db
     image: pgvector/pgvector:pg16
     ports:
@@ -12,3 +14,11 @@ services:
     volumes:
      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
      - ./postgres/data:/var/lib/postgresql/data
+  # backend:
+  #   container_name: backend
+  #   build : ./backend
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./backend:/cinema/backend
+  #   restart: always
