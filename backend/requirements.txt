@@ -1,0 +1,5 @@
+psycopg[binary]
+sqlalchemy
+pgvector
+streamlit
+fastapi
