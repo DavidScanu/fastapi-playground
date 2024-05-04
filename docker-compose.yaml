@@ -1,5 +1,6 @@
 name: cinema
 services:
+
   db:
     container_name: db
     image: pgvector/pgvector:pg16
@@ -12,12 +13,19 @@ services:
       - POSTGRES_PASSWORD=testpwd
     volumes:
      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-     - ./postgres/data:/var/lib/postgresql/data
-  # backend:
-  #   container_name: backend
-  #   build : ./backend
-  #   ports:
-  #     - "8000:8000"
-  #   volumes:
-  #     - ./backend:/cinema/backend
-  #   restart: always
+     - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=david@email.com
+      - PGADMIN_DEFAULT_PASSWORD=abcdef12345
+      - PGADMIN_LISTEN_PORT=5050
+      - PGADMIN_CONFIG_PROXY_X_HOST_COUNT=1
+      - PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT=1
+    ports:
+      - "5050:5050"
+
+volumes:
+  db-data:
