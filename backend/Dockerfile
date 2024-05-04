@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD fastapi run main.py --port $PORT 
+CMD fastapi run main.py
