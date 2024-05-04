@@ -2,13 +2,12 @@ name: cinema
 services:
   db:
     container_name: db
-    hostname: db
     image: pgvector/pgvector:pg16
     ports:
      - 5432:5432
     restart: always
     environment:
-      - POSTGRES_DB=vectordb
+      - POSTGRES_DB=cinema
       - POSTGRES_USER=testuser
       - POSTGRES_PASSWORD=testpwd
     volumes:

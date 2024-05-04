@@ -3,3 +3,4 @@ sqlalchemy
 pgvector
 streamlit
 fastapi
+python-dotenv
