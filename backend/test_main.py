@@ -1,12 +1,13 @@
 import psycopg
 from unittest import TestCase, main
-import os
+
+from database import get_db_uri
 
 class TestDatabase(TestCase):
     # Vérifier connection à la base de données
     def test_connection(self):
 
-        DB_URI = os.environ['DB_URI']
+        DB_URI = get_db_uri()
         self.assertIsNotNone(DB_URI)
 
         with psycopg.connect(conninfo=DB_URI) as conn:
