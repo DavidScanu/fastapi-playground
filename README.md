@@ -1,11 +1,9 @@
-# 🎬 Cinéma
+# Playground FastAPI + PostgreSQL
 
-## Développement Full-stack
+## 1. Créer un stack
 
-### 1. Créer un stack Docker
-
-- Frontend : React
-- Backend : FastAPI
+- Frontend : 
+- Backend : FastAPI ✔️
 - Base de données : PostgreSQL ✔️
 - pgAdmin 4 ✔️
 
