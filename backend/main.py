@@ -1,11 +1,12 @@
 from enum import Enum
-
 from pydantic import BaseModel
-
 from fastapi import FastAPI, HTTPException
 
-app = FastAPI()
+# Comment utiliser FastAPI : un didacticiel Python détaillé
+# https://youtu.be/SORiTsvnU28?si=RBx6J1KTzEXKstQf
+# https://github.com/ArjanCodes/2023-fastapi.git
 
+app = FastAPI()
 
 class Category(Enum):
     TOOLS = "tools"
