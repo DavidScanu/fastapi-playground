@@ -1,4 +1,4 @@
-name: cinema
+name: playground
 services:
 
   backend_server:
