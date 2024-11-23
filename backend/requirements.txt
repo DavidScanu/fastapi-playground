@@ -1,6 +1,7 @@
-psycopg[binary]
+psycopg2-binary
 sqlalchemy
 pgvector
 streamlit
-fastapi
+fastapi[standard]
+sqlmodel
 python-dotenv
