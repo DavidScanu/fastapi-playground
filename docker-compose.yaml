@@ -49,7 +49,18 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres_server
-      
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 80:8080
+    volumes:
+      - ./nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend_server
+
+
 volumes:
   db-data:
   pgadmin-data:

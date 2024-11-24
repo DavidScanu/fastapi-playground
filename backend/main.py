@@ -1,6 +1,6 @@
 from typing import Annotated
 from database import get_db_uri_sqlalchemy, get_db_uri
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, APIRouter, HTTPException, Query
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 
@@ -32,14 +32,14 @@ def get_session():
 SessionDep = Annotated[Session, Depends(get_session)]
 
 app = FastAPI()
-
+router = APIRouter(prefix="/api")
 
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
 
 # Create
-@app.post("/heroes/")
+@router.post("/heroes/")
 def create_hero(hero: Hero, session: SessionDep) -> Hero:
     # "session" is a dependency-injected parameter. It's a Session object that we can use to interact with the database.
     session.add(hero) # Adds the new hero object to the session
@@ -48,14 +48,13 @@ def create_hero(hero: Hero, session: SessionDep) -> Hero:
     return hero
 
 # Read
-@app.get("/heroes/")
+@router.get("/heroes/")
 def read_heroes(session: SessionDep, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100,) -> list[Hero]:
     heroes = session.exec(select(Hero).offset(offset).limit(limit)).all()
-    print(heroes)
     return heroes
 
 # Read
-@app.get("/heroes/{hero_id}")
+@router.get("/heroes/{hero_id}")
 def read_hero(hero_id: int, session: SessionDep) -> Hero:
     hero = session.get(Hero, hero_id)
     if not hero:
@@ -63,7 +62,7 @@ def read_hero(hero_id: int, session: SessionDep) -> Hero:
     return hero
 
 # Delete
-@app.delete("/heroes/{hero_id}")
+@router.delete("/heroes/{hero_id}")
 def delete_hero(hero_id: int, session: SessionDep):
     hero = session.get(Hero, hero_id)
     if not hero:
@@ -71,3 +70,5 @@ def delete_hero(hero_id: int, session: SessionDep):
     session.delete(hero)
     session.commit()
     return {"ok": True}
+
+app.include_router(router)
