@@ -1,6 +1,6 @@
 from typing import Annotated
 from database import get_db_uri_sqlalchemy, get_db_uri
-from fastapi import Depends, FastAPI, APIRouter, HTTPException, Query
+from fastapi import Depends, FastAPI, APIRouter, HTTPException, Query, Request
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 
@@ -38,9 +38,10 @@ router = APIRouter()
 def on_startup():
     create_db_and_tables()
 
-@router.get("/")
-def read_root():
-    return {"message": "Welcome to this fantastic app!"}
+
+@app.get("/")
+def read_main(request: Request):
+    return {"message": "Welcome to this fantastic app!", "root_path": request.scope.get("root_path")}
 
 # Create
 @router.post("/heroes/")
