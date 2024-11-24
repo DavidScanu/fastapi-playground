@@ -7,6 +7,12 @@
 - Base de données : PostgreSQL ✔️
 - pgAdmin 4 ✔️
 
+## TODO
+
+- Réécrire le fichier `README.md`
+- Essayer un Template Engine dans FastAPI
+- Ajouter application front-end
+
 ## 🏃 Usage
 
 The provided instructions detail the steps for setting up and running the application with a **PostgreSQL** database using **Docker Compose**.
