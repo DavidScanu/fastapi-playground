@@ -2,7 +2,7 @@ name: fastapi_playground
 services:
 
   backend_server:
-    container_name: app_backend
+    container_name: backend
     build: ./backend
     volumes:
       - ./backend:/app
@@ -20,7 +20,7 @@ services:
       - postgres_server
 
   postgres_server:
-    container_name: app_db
+    container_name: postgresql
     image: pgvector/pgvector:pg16
     restart: always
     ports:

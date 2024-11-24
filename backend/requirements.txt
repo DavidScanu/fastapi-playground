@@ -1,7 +1,6 @@
-psycopg2-binary
-sqlalchemy
-pgvector
-streamlit
 fastapi[standard]
 sqlmodel
-python-dotenv
+psycopg2-binary
+sqlalchemy
+gunicorn
+pgvector
