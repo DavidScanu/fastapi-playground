@@ -22,6 +22,8 @@ def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
 
+# yielding a database session allows FastAPI to inject the session into endpoint functions, 
+# ensuring that the session is properly managed and closed after use
 def get_session():
     with Session(engine) as session:
         yield session
@@ -36,25 +38,23 @@ app = FastAPI()
 def on_startup():
     create_db_and_tables()
 
-
+# Create
 @app.post("/heroes/")
 def create_hero(hero: Hero, session: SessionDep) -> Hero:
-    session.add(hero)
-    session.commit()
-    session.refresh(hero)
+    # "session" is a dependency-injected parameter. It's a Session object that we can use to interact with the database.
+    session.add(hero) # Adds the new hero object to the session
+    session.commit() # Commits the transaction, saving the new hero to the database.
+    session.refresh(hero) # Refreshes the hero object with the latest data from the database, including any auto-generated fields like id.
     return hero
 
-
+# Read
 @app.get("/heroes/")
-def read_heroes(
-    session: SessionDep,
-    offset: int = 0,
-    limit: Annotated[int, Query(le=100)] = 100,
-) -> list[Hero]:
+def read_heroes(session: SessionDep, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100,) -> list[Hero]:
     heroes = session.exec(select(Hero).offset(offset).limit(limit)).all()
+    print(type(heroes))
     return heroes
 
-
+# Read
 @app.get("/heroes/{hero_id}")
 def read_hero(hero_id: int, session: SessionDep) -> Hero:
     hero = session.get(Hero, hero_id)
@@ -62,7 +62,7 @@ def read_hero(hero_id: int, session: SessionDep) -> Hero:
         raise HTTPException(status_code=404, detail="Hero not found")
     return hero
 
-
+# Delete
 @app.delete("/heroes/{hero_id}")
 def delete_hero(hero_id: int, session: SessionDep):
     hero = session.get(Hero, hero_id)
