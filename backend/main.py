@@ -31,12 +31,16 @@ def get_session():
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
-app = FastAPI()
-router = APIRouter(prefix="/api")
+app = FastAPI(root_path="/api")
+router = APIRouter()
 
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
+
+@router.get("/")
+def read_root():
+    return {"message": "Welcome to this fantastic app!"}
 
 # Create
 @router.post("/heroes/")
