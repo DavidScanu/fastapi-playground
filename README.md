@@ -9,6 +9,7 @@
 
 ## TODO
 
+- Essayer form data + fichier avec BaseModel (ou SQLModel)
 - Réécrire le fichier `README.md`
 - Essayer un Template Engine dans FastAPI
 - Ajouter application front-end

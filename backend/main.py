@@ -1,6 +1,6 @@
 from typing import Annotated
 from database import get_db_uri_sqlalchemy, get_db_uri
-from fastapi import Depends, FastAPI, APIRouter, HTTPException, Query, Request
+from fastapi import Depends, FastAPI, APIRouter, HTTPException, Query, Request, File, Form, UploadFile
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 
@@ -75,5 +75,20 @@ def delete_hero(hero_id: int, session: SessionDep):
     session.delete(hero)
     session.commit()
     return {"ok": True}
+
+
+
+# File and Form
+@app.post("/files/")
+async def create_file(
+    file: Annotated[bytes, File()],
+    fileb: Annotated[UploadFile, File()],
+    token: Annotated[str, Form()],
+):
+    return {
+        "file_size": len(file),
+        "token": token,
+        "fileb_content_type": fileb.content_type,
+    }
 
 app.include_router(router)
