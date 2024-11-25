@@ -2,6 +2,7 @@ from typing import Annotated
 from database import get_db_uri_sqlalchemy, get_db_uri
 from fastapi import Depends, FastAPI, APIRouter, HTTPException, Query, Request, File, Form, UploadFile
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+from pydantic import BaseModel
 
 
 class Hero(SQLModel, table=True):
@@ -77,9 +78,8 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 
 
-
 # File and Form
-@app.post("/files/")
+@router.post("/files/")
 async def create_file(
     file: Annotated[bytes, File()],
     fileb: Annotated[UploadFile, File()],
@@ -90,5 +90,14 @@ async def create_file(
         "token": token,
         "fileb_content_type": fileb.content_type,
     }
+
+# Form Models
+class FormData(BaseModel):
+    username: str
+    password: str
+
+@router.post("/login/")
+async def login(data: Annotated[FormData, Form()]):
+    return data
 
 app.include_router(router)
