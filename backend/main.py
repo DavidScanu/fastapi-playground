@@ -1,23 +1,12 @@
 from typing import Annotated
-from database import get_db_uri_sqlalchemy, get_db_uri
 from fastapi import Depends, FastAPI, APIRouter, HTTPException, Query, Request, File, Form, UploadFile
 from sqlmodel import Field, Session, SQLModel, create_engine, select
-from pydantic import BaseModel
 
+from database import get_db_uri_sqlalchemy, get_db_uri
+from models import Hero
 
-class Hero(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    name: str = Field(index=True)
-    age: int | None = Field(default=None, index=True)
-    secret_name: str
-
-
-# sqlite_file_name = "database.db"
-# sqlite_url = f"sqlite:///{sqlite_file_name}"
-# connect_args = {"check_same_thread": False}
 db_uri = get_db_uri()
 engine = create_engine(db_uri)
-
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
