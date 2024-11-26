@@ -78,26 +78,4 @@ def delete_hero(hero_id: int, session: SessionDep):
     return {"ok": True}
 
 
-# File and Form
-@router.post("/files/")
-async def create_file(
-    file: Annotated[bytes, File()],
-    fileb: Annotated[UploadFile, File()],
-    token: Annotated[str, Form()],
-):
-    return {
-        "file_size": len(file),
-        "token": token,
-        "fileb_content_type": fileb.content_type,
-    }
-
-# Form Models
-class FormData(BaseModel):
-    username: str
-    password: str
-
-@router.post("/login/")
-async def login(data: Annotated[FormData, Form()]):
-    return data
-
 app.include_router(router)
