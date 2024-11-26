@@ -26,6 +26,8 @@ Before running `docker compose up`, you will need to create a `.env` file at the
 POSTGRES_DB=backend_db
 POSTGRES_USER=testuser
 POSTGRES_PASSWORD=testpwd
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
 ```
 
 *Note: The `.env` file should not be versioned and should be added to your `.gitignore` file.*
