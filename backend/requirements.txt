@@ -6,3 +6,4 @@ sqlalchemy
 gunicorn
 pgvector
 python-dotenv
+requests
